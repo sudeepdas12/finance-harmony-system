@@ -33,17 +33,18 @@ function Dashboard() {
         supabase.from("bank_transactions").select("id, is_reconciled"),
         supabase.from("pending_approvals").select("id", { count: "exact", head: true }).eq("status", "Pending"),
       ]);
-      const sum = (rows: { net_payable: number | null }[] | null, status?: string) =>
+      type Row = { net_payable: number | null; payment_status: string };
+      const sum = (rows: Row[] | null, status: string) =>
         (rows ?? [])
-          .filter((r: { payment_status?: string }) => !status || r.payment_status === status)
+          .filter((r) => r.payment_status === status)
           .reduce((a, r) => a + Number(r.net_payable ?? 0), 0);
       return {
         companies: companies.count ?? 0,
         clients: clients.count ?? 0,
-        interestPending: sum(interest.data as { net_payable: number | null; payment_status?: string }[], "Pending"),
-        interestPaid: sum(interest.data as { net_payable: number | null; payment_status?: string }[], "Paid"),
-        dividendPending: sum(dividend.data as { net_payable: number | null; payment_status?: string }[], "Pending"),
-        dividendPaid: sum(dividend.data as { net_payable: number | null; payment_status?: string }[], "Paid"),
+        interestPending: sum(interest.data as Row[] | null, "Pending"),
+        interestPaid: sum(interest.data as Row[] | null, "Paid"),
+        dividendPending: sum(dividend.data as Row[] | null, "Pending"),
+        dividendPaid: sum(dividend.data as Row[] | null, "Paid"),
         bankTotal: bank.data?.length ?? 0,
         bankReconciled: (bank.data ?? []).filter((b: { is_reconciled: boolean }) => b.is_reconciled).length,
         approvals: approvals.count ?? 0,
