@@ -1,12 +1,8 @@
-import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { LineChart, ShieldCheck, Wallet, FileSpreadsheet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
-  beforeLoad: async () => {
-    // Public landing — no redirect. Auth is optional here.
-    return;
-  },
   component: Landing,
 });
 
