@@ -149,10 +149,10 @@ function InterestPage() {
         fiscal_year: form.fiscal_year || null,
       };
       if (editing) {
-        const { error } = await supabase.from("interest_payables").update(payload).eq("id", editing.id);
+        const { error } = await supabase.from("interest_payables").update(payload as never).eq("id", editing.id);
         if (error) throw error;
       } else {
-        const { error } = await supabase.from("interest_payables").insert(payload);
+        const { error } = await supabase.from("interest_payables").insert(payload as never);
         if (error) throw error;
       }
     },
