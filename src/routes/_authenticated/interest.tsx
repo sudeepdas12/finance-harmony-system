@@ -263,7 +263,7 @@ function InterestPage() {
         });
       });
       if (!clean.length) return toast.error(errors[0] ?? "No valid rows");
-      const { error } = await supabase.from("interest_payables").insert(clean);
+      const { error } = await supabase.from("interest_payables").insert(clean as never);
       if (error) throw error;
       qc.invalidateQueries({ queryKey: ["interest_payables"] });
       toast.success(`Imported ${clean.length} rows${errors.length ? ` (${errors.length} skipped)` : ""}`);

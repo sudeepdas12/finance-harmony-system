@@ -153,10 +153,10 @@ function DividendPage() {
         fiscal_year: form.fiscal_year || null,
       };
       if (editing) {
-        const { error } = await supabase.from("dividend_payables").update(payload).eq("id", editing.id);
+        const { error } = await supabase.from("dividend_payables").update(payload as never).eq("id", editing.id);
         if (error) throw error;
       } else {
-        const { error } = await supabase.from("dividend_payables").insert(payload);
+        const { error } = await supabase.from("dividend_payables").insert(payload as never);
         if (error) throw error;
       }
     },
@@ -270,7 +270,7 @@ function DividendPage() {
         });
       });
       if (!clean.length) return toast.error(errors[0] ?? "No valid rows");
-      const { error } = await supabase.from("dividend_payables").insert(clean);
+      const { error } = await supabase.from("dividend_payables").insert(clean as never);
       if (error) throw error;
       qc.invalidateQueries({ queryKey: ["dividend_payables"] });
       toast.success(`Imported ${clean.length} rows${errors.length ? ` (${errors.length} skipped)` : ""}`);
