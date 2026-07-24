@@ -268,10 +268,11 @@ function MatchDialog({ txn, onClose, onDone }: { txn: Txn | null; onClose: () =>
 
   const doMatch = async (payableId: string) => {
     if (!txn) return;
-    const table = type === "interest" ? "interest_payables" : "dividend_payables";
-    const { error: e1 } = await supabase.from(table)
-      .update({ payment_status: "Paid", payment_date: txn.transaction_date, payment_reference: txn.reference }).eq("id", payableId);
-    if (e1) { toast.error(e1.message); return; }
+    const upd = { payment_status: "Paid" as const, payment_date: txn.transaction_date, payment_reference: txn.reference };
+    const res = type === "interest"
+      ? await supabase.from("interest_payables").update(upd).eq("id", payableId)
+      : await supabase.from("dividend_payables").update(upd).eq("id", payableId);
+    if (res.error) { toast.error(res.error.message); return; }
     const { error: e2 } = await supabase.from("bank_transactions")
       .update({ is_reconciled: true, matched_payable_id: payableId, matched_payable_type: type }).eq("id", txn.id);
     if (e2) { toast.error(e2.message); return; }
