@@ -252,9 +252,11 @@ function MatchDialog({ txn, onClose, onDone }: { txn: Txn | null; onClose: () =>
     queryKey: ["match-candidates", type, txn?.amount],
     queryFn: async () => {
       if (!txn) return [];
-      const table = type === "interest" ? "interest_payables" : "dividend_payables";
-      const { data } = await supabase.from(table).select("id, net_payable, due_date, payment_status, payment_reference").eq("payment_status", "Pending").order("due_date");
-      return (data ?? []) as { id: string; net_payable: number | null; due_date: string; payment_reference: string | null }[];
+      const q = type === "interest"
+        ? supabase.from("interest_payables").select("id, net_payable, due_date, payment_reference").eq("payment_status", "Pending").order("due_date")
+        : supabase.from("dividend_payables").select("id, net_payable, due_date, payment_reference").eq("payment_status", "Pending").order("due_date");
+      const { data } = await q;
+      return (data ?? []) as unknown as { id: string; net_payable: number | null; due_date: string; payment_reference: string | null }[];
     },
     enabled: !!txn,
   });
