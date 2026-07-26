@@ -91,46 +91,85 @@ export type Database = {
       }
       clients: {
         Row: {
+          account_type: string | null
+          address: string | null
           bank_account_no: string | null
+          bank_branch: string | null
           bank_name: string | null
           boid: string | null
           client_code: string
+          client_id: string | null
           created_at: string
           created_by: string | null
+          district: string | null
+          email: string | null
+          father_name: string | null
           full_name: string
+          grandfather_name: string | null
           holder_type: Database["public"]["Enums"]["holder_type"] | null
           id: string
+          municipality: string | null
           pan_or_citizenship: string | null
+          phone: string | null
+          province: string | null
+          residency: Database["public"]["Enums"]["residency_type"] | null
           status: Database["public"]["Enums"]["record_status"]
           updated_at: string
+          verification_status: Database["public"]["Enums"]["verification_status"]
         }
         Insert: {
+          account_type?: string | null
+          address?: string | null
           bank_account_no?: string | null
+          bank_branch?: string | null
           bank_name?: string | null
           boid?: string | null
           client_code: string
+          client_id?: string | null
           created_at?: string
           created_by?: string | null
+          district?: string | null
+          email?: string | null
+          father_name?: string | null
           full_name: string
+          grandfather_name?: string | null
           holder_type?: Database["public"]["Enums"]["holder_type"] | null
           id?: string
+          municipality?: string | null
           pan_or_citizenship?: string | null
+          phone?: string | null
+          province?: string | null
+          residency?: Database["public"]["Enums"]["residency_type"] | null
           status?: Database["public"]["Enums"]["record_status"]
           updated_at?: string
+          verification_status?: Database["public"]["Enums"]["verification_status"]
         }
         Update: {
+          account_type?: string | null
+          address?: string | null
           bank_account_no?: string | null
+          bank_branch?: string | null
           bank_name?: string | null
           boid?: string | null
           client_code?: string
+          client_id?: string | null
           created_at?: string
           created_by?: string | null
+          district?: string | null
+          email?: string | null
+          father_name?: string | null
           full_name?: string
+          grandfather_name?: string | null
           holder_type?: Database["public"]["Enums"]["holder_type"] | null
           id?: string
+          municipality?: string | null
           pan_or_citizenship?: string | null
+          phone?: string | null
+          province?: string | null
+          residency?: Database["public"]["Enums"]["residency_type"] | null
           status?: Database["public"]["Enums"]["record_status"]
           updated_at?: string
+          verification_status?: Database["public"]["Enums"]["verification_status"]
         }
         Relationships: []
       }
@@ -140,11 +179,22 @@ export type Database = {
           bank_name: string | null
           company_code: string
           company_name: string
+          company_type: string | null
+          coupon_rate: number | null
           created_at: string
           created_by: string | null
+          debenture_rate: number | null
+          dividend_rate: number | null
+          face_value: number | null
+          fiscal_year: string | null
           id: string
           interest_tax_status: Database["public"]["Enums"]["tax_status"] | null
+          isin: string | null
+          issue_size: number | null
+          listed_date: string | null
+          maturity_date: string | null
           pan_no: string | null
+          registrar: string | null
           sector_type: Database["public"]["Enums"]["sector_type"] | null
           status: Database["public"]["Enums"]["record_status"]
           updated_at: string
@@ -154,11 +204,22 @@ export type Database = {
           bank_name?: string | null
           company_code: string
           company_name: string
+          company_type?: string | null
+          coupon_rate?: number | null
           created_at?: string
           created_by?: string | null
+          debenture_rate?: number | null
+          dividend_rate?: number | null
+          face_value?: number | null
+          fiscal_year?: string | null
           id?: string
           interest_tax_status?: Database["public"]["Enums"]["tax_status"] | null
+          isin?: string | null
+          issue_size?: number | null
+          listed_date?: string | null
+          maturity_date?: string | null
           pan_no?: string | null
+          registrar?: string | null
           sector_type?: Database["public"]["Enums"]["sector_type"] | null
           status?: Database["public"]["Enums"]["record_status"]
           updated_at?: string
@@ -168,11 +229,22 @@ export type Database = {
           bank_name?: string | null
           company_code?: string
           company_name?: string
+          company_type?: string | null
+          coupon_rate?: number | null
           created_at?: string
           created_by?: string | null
+          debenture_rate?: number | null
+          dividend_rate?: number | null
+          face_value?: number | null
+          fiscal_year?: string | null
           id?: string
           interest_tax_status?: Database["public"]["Enums"]["tax_status"] | null
+          isin?: string | null
+          issue_size?: number | null
+          listed_date?: string | null
+          maturity_date?: string | null
           pan_no?: string | null
+          registrar?: string | null
           sector_type?: Database["public"]["Enums"]["sector_type"] | null
           status?: Database["public"]["Enums"]["record_status"]
           updated_at?: string
@@ -506,8 +578,10 @@ export type Database = {
       holder_type: "Public" | "Promoter" | "Institution"
       payment_status: "Pending" | "Paid" | "Partial"
       record_status: "Active" | "Inactive"
+      residency_type: "Resident" | "Non-Resident"
       sector_type: "Public" | "Private" | "Institution" | "Government" | "Other"
       tax_status: "Taxable" | "Exempted"
+      verification_status: "Pending" | "Verified" | "Rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -646,8 +720,10 @@ export const Constants = {
       holder_type: ["Public", "Promoter", "Institution"],
       payment_status: ["Pending", "Paid", "Partial"],
       record_status: ["Active", "Inactive"],
+      residency_type: ["Resident", "Non-Resident"],
       sector_type: ["Public", "Private", "Institution", "Government", "Other"],
       tax_status: ["Taxable", "Exempted"],
+      verification_status: ["Pending", "Verified", "Rejected"],
     },
   },
 } as const
